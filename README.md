@@ -5,9 +5,9 @@ UI组件vue3.0封装，uni-app使用。
 ## 安装
 
 ```sh
-git clone https://github.com/mankeung/mView.git
+git clone https://github.com/mankeung/mview-ui.git
 
-git clone https://gitee.com/mankeung/mView.git
+git clone https://gitee.com/mankeung/mview-ui.git
 ```
 
 ## 使用说明
