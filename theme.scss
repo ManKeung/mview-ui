@@ -1,0 +1,54 @@
+/* 颜色变量 */
+
+/* 主色 */
+$m-main-color: #303133;
+$m-content-color: #606266;
+$m-tips-color: #909193;
+$m-light-color: #c0c4cc;
+$m-border-color: #dadbde;
+$m-bg-color: #f3f4f6;
+$m-disabled-color: #c8c9cc;
+
+/* 行为相关颜色 */
+$m-primary: #3c9cff;
+$m-primary-dark: #398ade;
+$m-primary-disabled: #9acafc;
+$m-primary-light: #ecf5ff;
+
+$m-warning: #f0ad4e;
+$m-warning-dark: #f1a532;
+$m-warning-disabled: #f9d39b;
+$m-warning-light: #fdf6ec;
+
+$m-success: #4cd964;
+$m-success-dark: #53c21d;
+$m-success-disabled: #a9e08f;
+$m-success-light: #f5fff0;
+
+$m-error: #dd524d;
+$m-error-dark: #e45656;
+$m-error-disabled: #f7b2b2;
+$m-error-light: #fef0f0;
+
+$m-info: #909399;
+$m-info-dark: #767a82;
+$m-info-disabled: #c4c6c9;
+$m-info-light: #f4f4f5;
+
+/* 尺寸变量 */
+
+/* 文字尺寸 */
+$m-font-size-sm: 12px;
+$m-font-size-base: 14px;
+$m-font-size-lg: 16px;
+
+/* 距离 */
+$m-pad: 15px;
+
+// scss混入，为了少写几行#ifndef
+@mixin flex($direction: row) {
+	/* #ifndef APP-NVUE */
+	display: flex;
+	/* #endif */
+	flex-direction: $direction;
+}

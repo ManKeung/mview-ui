@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-45033c2e","path":"/api/trim.html","title":"\u53BB\u9664\u7A7A\u683C","lang":"zh-CN","frontmatter":{},"excerpt":"","headers":[{"level":2,"title":"trem(str, pos)","slug":"trem-str-pos","children":[]}],"git":{},"filePathRelative":"api/trim.md"}');export{t as data};

@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-8d8fe944","path":"/components/install.html","title":"\u5B89\u88C5","lang":"zh-CN","frontmatter":{},"excerpt":"","headers":[{"level":2,"title":"git","slug":"git","children":[]},{"level":2,"title":"\u7248\u672C\u67E5\u8BE2","slug":"\u7248\u672C\u67E5\u8BE2","children":[]}],"git":{},"filePathRelative":"components/install.md"}');export{t as data};

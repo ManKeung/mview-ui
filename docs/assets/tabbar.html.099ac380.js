@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-05a823fb","path":"/components/tabbar.html","title":"Tabbar \u5E95\u90E8\u5BFC\u822A\u680F","lang":"zh-CN","frontmatter":{},"excerpt":"","headers":[],"git":{},"filePathRelative":"components/tabbar.md"}');export{t as data};

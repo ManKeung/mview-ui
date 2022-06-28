@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-d82ea0c4","path":"/components/image.html","title":"Image \u56FE\u7247","lang":"zh-CN","frontmatter":{},"excerpt":"","headers":[],"git":{},"filePathRelative":"components/image.md"}');export{e as data};

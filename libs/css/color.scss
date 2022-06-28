@@ -1,0 +1,21 @@
+@import "./_primary.scss";
+@import "./_warning.scss";
+@import "./_success.scss";
+@import "./_error.scss";
+@import "./_info.scss";
+
+.m-main-color {
+	color: $m-main-color;
+}
+
+.m-content-color {
+	color: $m-content-color;
+}
+
+.m-tips-color {
+	color: $m-tips-color;
+}
+
+.m-light-color {
+	color: $m-light-color;
+}

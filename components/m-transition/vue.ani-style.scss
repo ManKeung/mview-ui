@@ -1,0 +1,113 @@
+/**
+ * vue版本动画内置的动画模式有如下：
+ * fade：淡入
+ * zoom：缩放
+ * fade-zoom：缩放淡入
+ * fade-up：上滑淡入
+ * fade-down：下滑淡入
+ * fade-left：左滑淡入
+ * fade-right：右滑淡入
+ * slide-up：上滑进入
+ * slide-down：下滑进入
+ * slide-left：左滑进入
+ * slide-right：右滑进入
+ */
+
+$u-zoom-scale: scale(0.95);
+
+.m-fade-enter-active,
+.m-fade-leave-active {
+    transition-property: opacity;
+}
+
+.m-fade-enter,
+.m-fade-leave-to {
+    opacity: 0;
+}
+
+.m-fade-zoom-enter,
+.m-fade-zoom-leave-to {
+    transform: $u-zoom-scale;
+    opacity: 0;
+}
+
+.m-fade-zoom-enter-active,
+.m-fade-zoom-leave-active {
+    transition-property: transform, opacity;
+}
+
+.m-fade-down-enter-active,
+.m-fade-down-leave-active,
+.m-fade-left-enter-active,
+.m-fade-left-leave-active,
+.m-fade-right-enter-active,
+.m-fade-right-leave-active,
+.m-fade-up-enter-active,
+.m-fade-up-leave-active {
+    transition-property: opacity, transform;
+}
+
+.m-fade-up-enter,
+.m-fade-up-leave-to {
+    transform: translate3d(0, 100%, 0);
+    opacity: 0;
+}
+
+.m-fade-down-enter,
+.m-fade-down-leave-to {
+    transform: translate3d(0, -100%, 0);
+    opacity: 0;
+}
+
+.m-fade-left-enter,
+.m-fade-left-leave-to {
+    transform: translate3d(-100%, 0, 0);
+    opacity: 0;
+}
+
+.m-fade-right-enter,
+.m-fade-right-leave-to {
+    transform: translate3d(100%, 0, 0);
+    opacity: 0;
+}
+
+.m-slide-down-enter-active,
+.m-slide-down-leave-active,
+.m-slide-left-enter-active,
+.m-slide-left-leave-active,
+.m-slide-right-enter-active,
+.m-slide-right-leave-active,
+.m-slide-up-enter-active,
+.m-slide-up-leave-active {
+    transition-property: transform;
+}
+
+.m-slide-up-enter,
+.m-slide-up-leave-to {
+    transform: translate3d(0, 100%, 0);
+}
+
+.m-slide-down-enter,
+.m-slide-down-leave-to {
+    transform: translate3d(0, -100%, 0);
+}
+
+.m-slide-left-enter,
+.m-slide-left-leave-to {
+    transform: translate3d(-100%, 0, 0);
+}
+
+.m-slide-right-enter,
+.m-slide-right-leave-to {
+    transform: translate3d(100%, 0, 0);
+}
+
+.m-zoom-enter-active,
+.m-zoom-leave-active {
+    transition-property: transform;
+}
+
+.m-zoom-enter,
+.m-zoom-leave-to {
+    transform: $u-zoom-scale;
+}

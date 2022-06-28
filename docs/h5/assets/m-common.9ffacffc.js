@@ -1,0 +1,2 @@
+import{d as t,g as e,h as r,o as a,c as n,B as s}from"./index.2180f076.js";import{_ as o}from"./m-navbar.01e56689.js";const i=t({props:{title:String,default:""},setup(t){const i=()=>{s().length>1?uni.$m.route({type:"back"}):uni.$m.route({type:"to",url:"pages/index/index"})};return(s,l)=>{const p=e(r("m-navbar"),o);return a(),n(p,{title:t.title,placeholder:"",onLeftClick:i},null,8,["title"])}}});export{i as _};
+//# sourceMappingURL=m-common.9ffacffc.js.map

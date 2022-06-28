@@ -1,0 +1,412 @@
+// 存储prop
+var me = {}
+
+// 私有
+var self = {
+    top: 0, // 上拉下拉距离
+    oldTop: 0, // 记录触摸前上拉下拉距离
+    isTouch: false, // 手指是否开始触摸
+    startXY: { // 触摸点
+        x: 0,
+        y: 0
+    },
+    isDown: false, // 下拉刷新
+    isUp: false, // 上拉加载
+    ins: null, // wxs便于操作
+    // dH: 0, // 下拉盒子高度
+    isPrevent: false // false表示不往上冒泡，相当于调用了同时调用了stopPropagation和preventDefault (对小程序生效, h5和app无效)
+}
+
+var timer = null
+
+// 设置动画样式
+self.onMoving = function (options) {
+    if (!options) options = {}
+    var ins = options.ins || self.ins || {}
+    var cls = options.cls || '.m-swiper-box'
+    var top = options.top || 0
+    var type = options.type || 'none'
+    var style = options.style || {}
+    var time = options.time || null
+
+    var objStyle = {
+        'will-change': 'transform', // 可解决下拉过程中, image和swiper脱离文档流的问题
+        top: top + 'px',
+        transition: type + ' 0.5s'
+    }
+
+    if (style.transition) objStyle.transition = style.transition
+    if (style.top !== undefined) objStyle.top = style.top
+    if (style.opacity !== undefined) objStyle.opacity = style.opacity
+
+    if (time) {
+        if (timer) {
+            ins.clearTimeout(timer)
+            timer = null
+        }
+        timer = ins.setTimeout(function () {
+            ins.requestAnimationFrame(function() {
+                ins.selectComponent(cls).setStyle(objStyle)
+
+                if (cls === '.m-swiper-box' && type === 'top') self.top = top
+            })
+            timer = null
+        }, time)
+
+        return
+    }
+
+    ins.requestAnimationFrame(function() {
+        ins.selectComponent(cls).setStyle(objStyle)
+
+        if (cls === '.m-swiper-box' && type === 'top') self.top = top
+    })
+}
+
+// 设置index
+self.setIndex = function (options = {}) {
+    if (!options) options = {}
+
+    var ins = options.ins || self.ins || {}
+    var index = options.index
+    var num = me.index + -1 * index
+
+    if (num > me.len - 1) return false
+    if (num < 0) return false
+
+    me.index = num
+    ins.callMethod('$emitWXS', {
+        type: 'setIndex',
+        value: num
+    })
+
+    return true
+}
+
+function propObserver(data) {
+    me = data || {}
+
+    if (me.loading || !self.ins) return
+
+    // 下拉刷新完成
+    self.onMoving({
+        ins: self.ins,
+        cls: '.m-swiper-down .right',
+        style: {
+            opacity: 0,
+            transition: 'none',
+        }
+    })
+
+    self.onMoving({
+        ins: self.ins,
+        cls: '.m-swiper-down .left',
+        style: {
+            opacity: 0,
+            transition: 'none',
+        }
+    })
+}
+
+// 手指触摸
+function touchstartEvent(e, ins) {
+    if (!self.ins) self.ins = ins
+
+    // if (!me.dH) {
+    //     var query = ins.selectComponent('.m-swiper-down')
+    //     var data = query.getBoundingClientRect()
+    //     me.dH = data.height
+    // }
+
+    var changedTouches = e.changedTouches || []
+    var x = changedTouches[0].pageX || 0
+    var y = changedTouches[0].pageY || 0
+
+    // 没拿到信息或双指操作
+    if (!changedTouches.length || changedTouches.length >= 2) return self.isPrevent
+
+    self.isTouch = true
+    self.oldTop = self.top
+    self.startXY = {
+        x: x,
+        y: y
+    }
+
+    return self.isPrevent
+}
+
+// 手指移动
+function touchmoveEvent(e, ins) {
+    var startXY = self.startXY
+    var oldTop = self.oldTop
+    var index = me.index
+
+    // 不处理触摸
+    if (!self.isTouch) return self.isPrevent
+
+    var changedTouches = e.changedTouches || []
+    var x = changedTouches[0].pageX || 0
+    var y = changedTouches[0].pageY || 0
+
+    var moveX = x - startXY.x
+    var moveY = y - startXY.y
+
+    // 横向滚动不处理
+    var diff = Math.abs(moveY) - Math.abs(moveX)
+    if (diff < 0 && diff < 10) return
+
+    if (moveY < 0 && !self.isDown) self.isMoveUP = true
+
+    var top = Math.abs(moveY)
+
+    if (moveY > 0 && index === 0 && !self.isMoveUP) self.isDown = true
+
+    if (moveY < 0 && index === me.len - 1) self.isUp = true
+
+    if (self.isDown) {
+        var num = 0
+        var opacity = 0
+
+        if (moveY > me.dH) {
+            num = me.dH
+            opacity = 1
+        } else {
+            num = moveY
+            opacity = moveY / me.dH
+        }
+
+        if (moveY < me.dH * -1) {
+            opacity = 1
+        } else {
+            opacity = Math.abs(moveY / me.dH)
+        }
+
+        if (opacity > 1) opacity = 1
+
+        !me.loading && self.onMoving({
+            cls: '.m-swiper-down',
+            top: num,
+            style: {
+                opacity: 1
+            }
+        })
+
+        !me.loading && self.onMoving({
+            cls: '.m-swiper-down .left',
+            style: {
+                opacity
+            }
+        })
+
+        !me.loading && self.onMoving({
+            cls: '.m-swiper-down .right',
+            style: {
+                opacity
+            }
+        })
+
+        self.ins.callMethod('$emitWXS', {
+            type: 'header',
+            value: {
+                opacity: 1 - opacity,
+                top: num
+            }
+        })
+
+        return self.isPrevent
+    }
+
+    if (self.isUp) {
+        var num =  0
+        var maxH = me.maxH
+        if (moveY < maxH) {
+            num = maxH
+        } else {
+            num = moveY
+        }
+
+        self.onMoving({
+            top: oldTop + num
+        })
+
+        return self.isPrevent
+    }
+
+    if (moveY > 0 && index) {
+        self.onMoving({
+            top: oldTop + top
+        })
+
+        return self.isPrevent
+    }
+
+    if (index === 0 && moveY > 0) {
+        var num = oldTop - top
+        self.onMoving({
+            top: num < 0 ? 0 : num
+        })
+
+        return self.isPrevent
+    }
+
+    self.onMoving({
+        top: oldTop - top
+    })
+
+    return self.isPrevent
+}
+
+function touchendEvent(e, ins) {
+    var loading = me.loading
+    var startXY = self.startXY
+    var oldTop = self.oldTop
+    var index = me.index
+    var height = me.height
+
+    // 不处理触摸
+    if (!self.isTouch) return self.isPrevent
+
+    var changedTouches = e.changedTouches || []
+    var x = changedTouches[0].pageX || 0
+    var y = changedTouches[0].pageY || 0
+
+    var moveX = x - startXY.x
+    var moveY = y - startXY.y
+    var top = Math.abs(moveY)
+
+    self.isTouch = false
+    self.isMoveUP = false
+
+    var num = moveY > 0 ? 1 : -1
+
+    if (self.isDown) {
+        self.isDown = false
+
+        if (moveY >= me.dH && !loading) {
+            self.onMoving({
+                cls: '.m-swiper-down',
+                top: 0,
+                style: {
+                    transition: 'all 0.5s',
+                }
+            })
+
+            self.onMoving({
+                cls: '.m-swiper-down .left',
+                style: {
+                    opacity: 0,
+                    transition: 'all 0.5s',
+                },
+                time: 1000
+            })
+
+            self.onMoving({
+                cls: '.m-swiper-down .right',
+                style: {
+                    opacity: 1,
+                    transition: 'all 0.5s',
+                }
+            })
+
+            ins.callMethod('$emitWXS', {
+                type: 'isDown',
+                value: true
+            })
+        } else {
+            self.onMoving({
+                cls: '.m-swiper-down',
+                top: 0,
+                style: {
+                    transition: 'none 0.5s',
+                }
+            })
+
+            self.onMoving({
+                cls: '.m-swiper-down .left',
+                style: {
+                    opacity: 0,
+                    transition: 'none 0.5s',
+                }
+            })
+
+            self.onMoving({
+                cls: '.m-swiper-down .right',
+                style: {
+                    opacity: 0,
+                    transition: 'none 0.5s',
+                }
+            })
+            
+            self.ins.callMethod('$emitWXS', {
+                type: 'header',
+                value: {
+                    opacity: 1,
+                    top: 0
+                }
+            })
+        }
+
+        self.onMoving({
+            top: oldTop,
+            type: 'top',
+            // style: {
+            //     transition: `none 0.5s`,
+            // }
+        })
+
+        return self.isPrevent
+    }
+
+    if (self.isUp) {
+        self.isUp = false
+        var maxH = me.maxH
+
+        if (moveY <= maxH) {
+            !loading && ins.callMethod('$emitWXS', {
+                type: 'isUp',
+                value: true
+            })
+        }
+
+        self.onMoving({
+            top: oldTop,
+            type: 'top'
+        })
+
+        return self.isPrevent
+    }
+
+    if (top < me.scrollH) {
+        self.onMoving({
+            top: oldTop,
+            type: 'top'
+        })
+
+        return self.isPrevent
+    }
+
+    var setIndex = self.setIndex({ index: num })
+
+    if (!setIndex) {
+        self.onMoving({
+            top: oldTop,
+            type: 'top'
+        })
+
+        return self.isPrevent
+    }
+
+    self.onMoving({
+        top: oldTop + height * num,
+        type: 'top'
+    })
+
+    return self.isPrevent
+}
+
+module.exports = {
+    propObserver: propObserver,
+    touchstartEvent: touchstartEvent,
+    touchmoveEvent: touchmoveEvent,
+    touchendEvent: touchendEvent
+}
