@@ -47,4 +47,4 @@ export function createApp() {
 - [文档gitee](https://mankeung.gitee.io/mview-ui/)
 - [文档github](https://mankeung.github.io/mview-ui)
 - [h5预览地址gitee](https://mankeung.gitee.io/mview-ui/h5)
-- [h5预览地址gitub](https://mankeung.github.io/mview-ui/h5)
+- [h5预览地址github](https://mankeung.github.io/mview-ui/h5)
