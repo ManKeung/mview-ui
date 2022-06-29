@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<link rel="stylesheet" href="./assets/uni.1727863d.css">
+    <head>
+      <link rel="stylesheet" href="./assets/uni.1727863d.css">
 
-		<meta charset="UTF-8" />
-		<script>
-			var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') ||
-				CSS.supports('top: constant(a)'))
-			document.write(
-				'<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' +
-				(coverSupport ? ', viewport-fit=cover' : '') + '" />')
-		</script>
+        <meta charset="UTF-8" />
+        <script>
+            var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') ||
+                CSS.supports('top: constant(a)'))
+            document.write(
+                '<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' +
+                (coverSupport ? ', viewport-fit=cover' : '') + '" />')
+        </script>
         <link rel="shortcut icon" type="image/x-icon" href="./assets/favicon.5089dc83.ico">
-		<title>加载中</title>
+        <title>加载中</title>
         
         <script src="./static/nprogress.js"></script>
-		<!--preload-links-->
-		<!--app-context-->
-		<script type="module" crossorigin src="./assets/index.2180f076.js"></script>
-		<link rel="stylesheet" href="./assets/index.085cacf8.css">
-	</head>
-	<body>
-		<div id="app">
-			<!--app-html-->
+        <!--preload-links-->
+        <!--app-context-->
+      <script type="module" crossorigin src="./assets/index.497973e8.js"></script>
+      <link rel="stylesheet" href="./assets/index.085cacf8.css">
+    </head>
+    <body>
+        <div id="app">
+            <!--app-html-->
             <div id="m-loading">
                 <div class="m-box">
                     <div class="m-item lod-1"></div>
@@ -32,17 +32,34 @@
                 </div>
                 <div class="m-txt">加载中</div>
             </div>
-		</div>
-		
+        </div>
+        
         <script>
             NProgress.configure({
                 showSpinner: false
             })
 
             NProgress.start()
-            document.addEventListener('touchmove', e => {
-                e.preventDefault()
-            }, { passive: false })
+            stopDrop()
+            function stopDrop() {
+                // 最后一次y坐标
+                let lastY = 0
+
+                document.addEventListener('touchstart', function(event) {
+                    // 点击屏幕时记录最后一次Y度坐标。
+                    lastY = event.changedTouches[0].clientY
+                }, { passive: false })
+
+                document.addEventListener('touchmove', function(event) {
+                    const y = event.changedTouches[0].clientY
+                    const h = document.documentElement.scrollTop || document.body.scrollTop
+                    if (y >= lastY && h <= 10) {
+                        event.preventDefault()
+                    }
+
+                    lastY = y
+                }, { passive: false })
+            }
         </script>
-	</body>
+    </body>
 </html>
