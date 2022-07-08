@@ -1,3 +1,5 @@
+import { getCommon } from '../props'
+
 export default {
-    ...uni.$m.config.props
+    ...getCommon()
 }

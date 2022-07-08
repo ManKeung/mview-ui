@@ -1,83 +1,85 @@
+import { getCommon, getDefault } from '../props'
+
 export default {
-    ...uni.$m.config.props,
+    ...getCommon(),
     // 键盘唤起是否自动上推页面
     adjustPosition: {
         type: Boolean,
-        default: uni.$m.props.codeInput.adjustPosition
+        default: getDefault('codeInput', 'adjustPosition')
     },
     // 最大输入长度
     maxlength: {
         type: [String, Number],
-        default: uni.$m.props.codeInput.maxlength
+        default: getDefault('codeInput', 'maxlength')
     },
     // 是否用圆点填充
     dot: {
         type: Boolean,
-        default: uni.$m.props.codeInput.dot
+        default: getDefault('codeInput', 'dot')
     },
     // 显示模式，box-盒子模式，line-底部横线模式
     mode: {
         type: String,
-        default: uni.$m.props.codeInput.mode
+        default: getDefault('codeInput', 'mode')
     },
     // 是否细边框
     hairline: {
         type: Boolean,
-        default: uni.$m.props.codeInput.hairline
+        default: getDefault('codeInput', 'hairline')
     },
     // 字符间的距离
     space: {
         type: [String, Number],
-        default: uni.$m.props.codeInput.space
+        default: getDefault('codeInput', 'space')
     },
     // 预置值
     value: {
         type: [String, Number],
-        default: uni.$m.props.codeInput.value
+        default: getDefault('codeInput', 'value')
     },
     // 是否自动获取焦点
     focus: {
         type: Boolean,
-        default: uni.$m.props.codeInput.focus
+        default: getDefault('codeInput', 'focus')
     },
     // 字体是否加粗
     bold: {
         type: Boolean,
-        default: uni.$m.props.codeInput.bold
+        default: getDefault('codeInput', 'bold')
     },
     // 字体颜色
     color: {
         type: String,
-        default: uni.$m.props.codeInput.color
+        default: getDefault('codeInput', 'color')
     },
     // 字体大小
     fontSize: {
         type: [String, Number],
-        default: uni.$m.props.codeInput.fontSize
+        default: getDefault('codeInput', 'fontSize')
     },
     // 输入框的大小，宽等于高
     size: {
         type: [String, Number],
-        default: uni.$m.props.codeInput.size
+        default: getDefault('codeInput', 'size')
     },
     // 是否隐藏原生键盘，如果想用自定义键盘的话，需设置此参数为true
     disabledKeyboard: {
         type: Boolean,
-        default: uni.$m.props.codeInput.disabledKeyboard
+        default: getDefault('codeInput', 'disabledKeyboard')
     },
     // 边框和线条颜色
     borderColor: {
         type: String,
-        default: uni.$m.props.codeInput.borderColor
+        default: getDefault('codeInput', 'borderColor')
     },
     // 是否禁止输入"."符号
     disabledDot: {
         type: Boolean,
-        default: uni.$m.props.codeInput.disabledDot
+        default: getDefault('codeInput', 'disabledDot')
     },
     // model值
     modelValue: {
         type: String,
-        default: uni.$m.props.codeInput.value
+        default: getDefault('codeInput', 'value')
     }
 }

@@ -1,0 +1,1 @@
+const a=JSON.parse('{"key":"v-05a823fb","path":"/components/tabbar.html","title":"Tabbar \u5E95\u90E8\u5BFC\u822A\u680F","lang":"zh-CN","frontmatter":{},"excerpt":"","headers":[],"git":{"updatedTime":1656417949000,"contributors":[{"name":"mankueng","email":"mankueng1011@gmail.com","commits":1}]},"filePathRelative":"components/tabbar.md"}');export{a as data};

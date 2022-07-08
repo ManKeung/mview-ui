@@ -1,12 +1,9 @@
-/**
- * @Author: ManKeung
- * @description: 组件参数
- */
+import { getCommon, getDefault } from '../props'
 
 export default {
-    ...uni.$m.config.props,
+    ...getCommon(),
     bac: {
         type: String,
-        default: uni.$m.props.statusBar.bac
+        default: getDefault('statusBar', 'bac')
     }
 }

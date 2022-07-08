@@ -1,58 +1,60 @@
+import { getCommon, getDefault } from '../props'
+
 export default {
-    ...uni.$m.config.props,
+    ...getCommon(),
     // 是否显示组件
     show: {
         type: Boolean,
-        default: uni.$m.props.loadingIcon.show
+        default: getDefault('loadingIcon', 'show')
     },
     // 颜色
     color: {
         type: String,
-        default: uni.$m.props.loadingIcon.color
+        default: getDefault('loadingIcon', 'color')
     },
     // 提示文字颜色
     textColor: {
         type: String,
-        default: uni.$m.props.loadingIcon.textColor
+        default: getDefault('loadingIcon', 'textColor')
     },
     // 文字和图标是否垂直排列
     vertical: {
         type: Boolean,
-        default: uni.$m.props.loadingIcon.vertical
+        default: getDefault('loadingIcon', 'vertical')
     },
     // 模式选择，circle-圆形，spinner-花朵形，semicircle-半圆形
     mode: {
         type: String,
-        default: uni.$m.props.loadingIcon.mode
+        default: getDefault('loadingIcon', 'mode')
     },
     // 图标大小，单位默认px
     size: {
         type: [String, Number],
-        default: uni.$m.props.loadingIcon.size
+        default: getDefault('loadingIcon', 'size')
     },
     // 文字大小
     textSize: {
         type: [String, Number],
-        default: uni.$m.props.loadingIcon.textSize
+        default: getDefault('loadingIcon', 'textSize')
     },
     // 文字内容
     text: {
         type: [String, Number],
-        default: uni.$m.props.loadingIcon.text
+        default: getDefault('loadingIcon', 'text')
     },
     // 动画模式
     timingFunction: {
         type: String,
-        default: uni.$m.props.loadingIcon.timingFunction
+        default: getDefault('loadingIcon', 'timingFunction')
     },
     // 动画执行周期时间
     duration: {
         type: [String, Number],
-        default: uni.$m.props.loadingIcon.duration
+        default: getDefault('loadingIcon', 'duration')
     },
     // mode=circle时的暗边颜色
     inactiveColor: {
         type: String,
-        default: uni.$m.props.loadingIcon.inactiveColor
+        default: getDefault('loadingIcon', 'inactiveColor')
     }
 }

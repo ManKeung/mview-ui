@@ -1,11 +1,17 @@
 // 版本号
-const version = '1.0.0'
+const version = '1.0.1'
 // 发布时间
-const time = '2022-06-04'
+const time = '2022-07-08'
 
 // 开发环境才提示，生产环境不会提示
 if (process.env.NODE_ENV === 'development') {
-	console.log(`\n\n %c mView v${version} %c ${time} %c https://mankeung.gitee.io/mview \n\n`, 'color: #ffffff; background: #3c9cff; padding:5px 0;', 'color: #fff;background: #f9ae3d; padding:5px 0;', 'background: #909399; padding:5px 0;');
+    // #ifndef APP-PLUS
+    console.log(`\n\n %c mView v${version} %c ${time} %c https://mankeung.gitee.io/mview-ui \n\n`, 'color: #ffffff; background: #3c9cff; padding:5px 0;', 'color: #fff;background: #f9ae3d; padding:5px 0;', 'background: #909399; padding:5px 0;')
+    // #endif
+
+    // #ifdef APP-PLUS
+    console.log(`mView v${version} ${time} https://mankeung.gitee.io/mview-ui`)
+    // #endif
 }
 
 export default {
